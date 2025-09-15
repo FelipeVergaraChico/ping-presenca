@@ -1,0 +1,98 @@
+/* Variáveis CSS para o tema Ânima */
+:root {
+  /* Cores Primárias */
+  --anima-primary: #1890ff;
+  --anima-primary-dark: #096dd9;
+  --anima-primary-light: #40a9ff;
+  
+  /* Cores Secundárias */
+  --anima-secondary: #001529;
+  --anima-secondary-light: #1c2b3a;
+  
+  /* Cores de Estado */
+  --anima-success: #52c41a;
+  --anima-warning: #faad14;
+  --anima-error: #ff4d4f;
+  --anima-info: #1890ff;
+  
+  /* Cores Neutras */
+  --anima-white: #ffffff;
+  --anima-gray-1: #f5f5f5;
+  --anima-gray-2: #fafafa;
+  --anima-gray-3: #f0f0f0;
+  --anima-gray-4: #d9d9d9;
+  --anima-gray-5: #bfbfbf;
+  --anima-gray-6: #8c8c8c;
+  --anima-gray-7: #595959;
+  --anima-gray-8: #434343;
+  --anima-gray-9: #262626;
+  --anima-gray-10: #1f1f1f;
+  
+  /* Sombras */
+  --anima-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --anima-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --anima-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Border Radius */
+  --anima-radius-sm: 4px;
+  --anima-radius-md: 6px;
+  --anima-radius-lg: 8px;
+  --anima-radius-xl: 12px;
+  
+  /* Espaçamentos */
+  --anima-spacing-xs: 4px;
+  --anima-spacing-sm: 8px;
+  --anima-spacing-md: 16px;
+  --anima-spacing-lg: 24px;
+  --anima-spacing-xl: 32px;
+  --anima-spacing-2xl: 48px;
+  
+  /* Fontes */
+  --anima-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --anima-font-size-xs: 12px;
+  --anima-font-size-sm: 14px;
+  --anima-font-size-md: 16px;
+  --anima-font-size-lg: 18px;
+  --anima-font-size-xl: 20px;
+  --anima-font-size-2xl: 24px;
+  --anima-font-size-3xl: 30px;
+}
+
+/* Classes utilitárias */
+.anima-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--anima-spacing-md);
+}
+
+.anima-card {
+  background: var(--anima-white);
+  border-radius: var(--anima-radius-lg);
+  box-shadow: var(--anima-shadow-md);
+  padding: var(--anima-spacing-lg);
+}
+
+.anima-button-primary {
+  background-color: var(--anima-primary);
+  border-color: var(--anima-primary);
+  color: var(--anima-white);
+}
+
+.anima-button-primary:hover {
+  background-color: var(--anima-primary-dark);
+  border-color: var(--anima-primary-dark);
+}
+
+.anima-text-center {
+  text-align: center;
+}
+
+.anima-mb-sm { margin-bottom: var(--anima-spacing-sm); }
+.anima-mb-md { margin-bottom: var(--anima-spacing-md); }
+.anima-mb-lg { margin-bottom: var(--anima-spacing-lg); }
+.anima-mb-xl { margin-bottom: var(--anima-spacing-xl); }
+
+.anima-mt-sm { margin-top: var(--anima-spacing-sm); }
+.anima-mt-md { margin-top: var(--anima-spacing-md); }
+.anima-mt-lg { margin-top: var(--anima-spacing-lg); }
+.anima-mt-xl { margin-top: var(--anima-spacing-xl); }

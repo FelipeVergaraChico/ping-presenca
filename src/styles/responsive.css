@@ -1,0 +1,309 @@
+/* Melhorias específicas para responsividade mobile/desktop */
+
+/* Mobile First - Base styles */
+@media (max-width: 576px) {
+  /* Spacing reduzido para mobile */
+  .ant-card {
+    margin: 8px 0;
+    padding: 12px;
+  }
+  
+  .ant-card-head {
+    padding: 12px 16px;
+    min-height: auto;
+  }
+  
+  .ant-card-body {
+    padding: 16px;
+  }
+  
+  /* Botões full-width em mobile */
+  .btn-responsive {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  /* Input com melhor experiência em mobile */
+  .ant-input {
+    height: 48px;
+    font-size: 16px; /* Evita zoom no iOS */
+    border-radius: 8px;
+  }
+  
+  .ant-select-selector {
+    height: 48px !important;
+    border-radius: 8px;
+  }
+  
+  /* Typography mobile */
+  .dashboard-title {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .dashboard-description {
+    font-size: 14px !important;
+    margin-bottom: 16px !important;
+  }
+  
+  /* Cards stat responsivos */
+  .stat-card .ant-statistic {
+    text-align: center;
+  }
+  
+  .stat-card .ant-statistic-content-value {
+    font-size: 24px !important;
+  }
+  
+  .stat-card .ant-statistic-title {
+    font-size: 12px !important;
+  }
+  
+  /* Lista de aulas mobile */
+  .ant-list-item {
+    padding: 12px 8px !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .ant-list-item-meta {
+    margin-bottom: 8px;
+  }
+  
+  /* QR Code responsivo */
+  .qr-code-container {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+  }
+  
+  .qr-code-container canvas {
+    max-width: 200px;
+    height: auto;
+  }
+  
+  /* Modal de sucesso mobile */
+  .attendance-success-overlay {
+    padding: 16px;
+  }
+  
+  .attendance-success-overlay .ant-card {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  /* Theme toggle mobile */
+  .theme-switch {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+  }
+  
+  /* Gráficos mobile */
+  .ant-card[title*="📊"], 
+  .ant-card[title*="📈"] {
+    height: 300px !important;
+  }
+  
+  .ant-card[title*="📊"] > .ant-card-body,
+  .ant-card[title*="📈"] > .ant-card-body {
+    height: 220px !important;
+  }
+}
+
+/* Tablet - Medium screens */
+@media (min-width: 577px) and (max-width: 768px) {
+  .btn-responsive {
+    height: 40px;
+  }
+  
+  .ant-input, .ant-select-selector {
+    height: 40px;
+  }
+  
+  .stat-card .ant-statistic-content-value {
+    font-size: 28px !important;
+  }
+  
+  /* Gráficos tablet */
+  .ant-card[title*="📊"], 
+  .ant-card[title*="📈"] {
+    height: 350px !important;
+  }
+}
+
+/* Desktop - Large screens */
+@media (min-width: 769px) {
+  /* Layout professor mais amplo */
+  .professor-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  /* Dashboard mais espaçoso */
+  .dashboard-header {
+    margin-bottom: 32px;
+  }
+  
+  /* Cards com hover mais pronunciado */
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Lista de alunos em colunas */
+  .student-list-desktop {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  
+  .student-list-desktop .ant-list-item {
+    break-inside: avoid;
+    margin-bottom: 8px;
+  }
+  
+  /* QR Code maior para projeção */
+  .qr-code-container canvas {
+    max-width: 300px;
+  }
+  
+  /* Modal de sucesso centralizado */
+  .attendance-success-overlay {
+    padding: 40px;
+  }
+  
+  /* Gráficos desktop */
+  .ant-card[title*="📊"], 
+  .ant-card[title*="📈"] {
+    height: 400px !important;
+  }
+  
+  .ant-card[title*="📊"] > .ant-card-body,
+  .ant-card[title*="📈"] > .ant-card-body {
+    height: 320px !important;
+  }
+}
+
+/* Extra large screens - Projetores */
+@media (min-width: 1200px) {
+  .professor-layout {
+    max-width: 1600px;
+  }
+  
+  /* Fonte maior para projeção */
+  .dashboard-title {
+    font-size: 36px !important;
+  }
+  
+  .dashboard-description {
+    font-size: 18px !important;
+  }
+  
+  /* Cards maiores */
+  .stat-card .ant-statistic-content-value {
+    font-size: 40px !important;
+  }
+  
+  .stat-card .ant-statistic-title {
+    font-size: 16px !important;
+  }
+  
+  /* QR Code para projeção */
+  .qr-code-container canvas {
+    max-width: 400px;
+  }
+  
+  /* Botões maiores para clique fácil */
+  .btn-responsive {
+    height: 50px;
+    font-size: 18px;
+  }
+  
+  /* Gráficos maiores */
+  .ant-card[title*="📊"], 
+  .ant-card[title*="📈"] {
+    height: 500px !important;
+  }
+  
+  .ant-card[title*="📊"] > .ant-card-body,
+  .ant-card[title*="📈"] > .ant-card-body {
+    height: 420px !important;
+  }
+}
+
+/* Orientação paisagem em mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .attendance-success-overlay .ant-card {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .theme-switch {
+    top: 5px;
+    right: 5px;
+    padding: 4px 8px;
+  }
+  
+  .theme-switch .ant-typography {
+    display: none; /* Ocultar texto em landscape */
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .qr-code-container canvas {
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Acessibilidade - Motion */
+@media (prefers-reduced-motion: reduce) {
+  .interactive-element,
+  .btn-responsive,
+  .ant-card,
+  .code-transition,
+  .fade-in-mobile,
+  .pulse {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .interactive-element:hover,
+  .ant-card:hover {
+    transform: none !important;
+  }
+}
+
+/* Dark mode high contrast */
+@media (prefers-contrast: high) {
+  .dark-theme {
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #666666;
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+    --bg-tertiary: #222222;
+  }
+}
+
+/* Print styles */
+@media print {
+  .theme-switch,
+  .interactive-element:hover,
+  .ant-card:hover {
+    display: none !important;
+  }
+  
+  .ant-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  .qr-code-container {
+    page-break-inside: avoid;
+  }
+}

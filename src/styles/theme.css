@@ -1,0 +1,428 @@
+/* Variáveis CSS para temas */
+:root {
+  /* Tema claro (padrão) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #fafafa;
+  --text-primary: #000000d9;
+  --text-secondary: #00000073;
+  --text-tertiary: #00000040;
+  --border-color: #d9d9d9;
+  --primary-color: #1890ff;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --error-color: #ff4d4f;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dark-theme {
+  /* Tema escuro com cores personalizadas */
+  --bg-primary: #141414;
+  --bg-secondary: #1f1f1f;
+  --bg-tertiary: #262626;
+  --text-primary: #ffffffd9;
+  --text-secondary: #ffffff73;
+  --text-tertiary: #ffffff40;
+  --border-color: #434343;
+  --primary-color: #00796b;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --error-color: #ff4d4f;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Aplicação das variáveis globais */
+html, body {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  background-color: var(--bg-secondary) !important;
+  min-height: 100vh;
+}
+
+/* Layout principal */
+.ant-layout {
+  background-color: var(--bg-secondary) !important;
+}
+
+.ant-layout-header {
+  background-color: #001529 !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.ant-layout-sider {
+  background-color: var(--bg-primary) !important;
+}
+
+.ant-layout-content {
+  background-color: var(--bg-primary) !important;
+}
+
+/* Cards e superfícies */
+.ant-card {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.ant-card-head {
+  background-color: var(--bg-primary) !important;
+  border-bottom-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-card-head-title {
+  color: var(--text-primary) !important;
+}
+
+.ant-card-body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* Microinterações */
+.interactive-element {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.interactive-element:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Botão de confirmar presença animado */
+.btn-responsive {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-responsive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(24, 144, 255, 0.2);
+}
+
+.btn-responsive::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-responsive:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Animação de sucesso no botão */
+.btn-success-animation {
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    background-color: #1890ff;
+  }
+  50% {
+    transform: scale(1.1);
+    background-color: #52c41a;
+  }
+  100% {
+    transform: scale(1);
+    background-color: #52c41a;
+  }
+}
+
+/* Tag pulsante para chamada ativa */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Fade in para mobile */
+.fade-in-mobile {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Transições suaves para códigos */
+.code-transition {
+  animation: codeChange 0.8s ease-in-out;
+}
+
+@keyframes codeChange {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  75% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* QR Code com animação de entrada */
+.qr-code-container {
+  animation: qrCodeAppear 0.5s ease-out;
+}
+
+@keyframes qrCodeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 768px) {
+  .ant-card {
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+  
+  .interactive-element:hover {
+    transform: scale(1.01);
+  }
+  
+  .btn-responsive {
+    height: 48px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+}
+
+/* Tema escuro para componentes específicos do Ant Design */
+.dark-theme .ant-select-selector,
+.dark-theme .ant-input,
+.dark-theme .ant-btn-default {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-select-selector:hover,
+.dark-theme .ant-input:hover,
+.dark-theme .ant-btn-default:hover {
+  border-color: var(--primary-color) !important;
+}
+
+.dark-theme .ant-select-dropdown {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-theme .ant-select-item {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-select-item:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark-theme .ant-menu {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-menu-item {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-menu-item:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark-theme .ant-menu-item-selected {
+  background-color: var(--primary-color) !important;
+}
+
+.dark-theme .ant-drawer-header {
+  background-color: var(--bg-primary) !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+.dark-theme .ant-drawer-body {
+  background-color: var(--bg-primary) !important;
+}
+
+.dark-theme .ant-drawer-title {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-typography {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-typography-caption {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .ant-list {
+  background-color: var(--bg-primary) !important;
+}
+
+.dark-theme .ant-list-item {
+  border-bottom-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-statistic {
+  color: var(--text-primary) !important;
+}
+
+.dark-theme .ant-statistic-title {
+  color: var(--text-secondary) !important;
+}
+
+.dark-theme .ant-tag {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Estatísticas com gradientes */
+.stat-card {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dark-theme .stat-card {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2d2d2d 100%);
+}
+
+/* Gráficos com tema escuro */
+.dark-theme canvas {
+  filter: brightness(1.1) contrast(1.1);
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark-theme .loading-shimmer {
+  background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Indicadores de status melhorados */
+.status-online {
+  position: relative;
+}
+
+.status-online::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: var(--success-color);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* Tooltips customizados */
+.custom-tooltip {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+/* Melhorias para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Toast animations */
+.toast-container {
+  transition: all 0.3s ease;
+}
+
+.animate-enter {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.animate-leave {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}

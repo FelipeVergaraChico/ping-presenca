@@ -1,0 +1,188 @@
+/* Estilos específicos do App */
+.app-container {
+  min-height: 100vh;
+}
+
+/* Customizações específicas para componentes */
+.ping-presenca-header {
+  background: linear-gradient(90deg, #001529 0%, #003a8c 100%);
+}
+
+.ping-presenca-logo {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.user-info {
+  color: #ffffff;
+}
+
+/* Estilos para o layout principal */
+.main-content {
+  background: #f0f2f5;
+  min-height: calc(100vh - 64px);
+}
+
+.content-wrapper {
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================================
+   COMPONENTES MODULARES
+   =========================================== */
+
+/* Hamburger Menu */
+.hamburger-menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.hamburger-menu:focus {
+  outline: 2px solid #40a9ff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.hamburger-line {
+  width: 18px;
+  height: 2px;
+  background-color: #ffffff;
+  margin: 2px 0;
+  transition: 0.3s;
+  transform-origin: center;
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+/* QR Code Display */
+.qr-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code-wrapper {
+  position: relative;
+  padding: 16px;
+  background: white;
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.qr-code-wrapper canvas {
+  display: block;
+  border-radius: 4px;
+}
+
+.qr-code-info {
+  text-align: center;
+  max-width: 300px;
+}
+
+.qr-code-info .ant-typography {
+  margin-bottom: 8px;
+}
+
+/* Statistic Card */
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card.clickable {
+  cursor: pointer;
+}
+
+.stat-card.clickable:focus {
+  outline: 2px solid #1890ff;
+  outline-offset: 2px;
+}
+
+.stat-card.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(24, 144, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Animações suaves */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .qr-code-container {
+    padding: 16px;
+  }
+
+  .qr-code-wrapper {
+    padding: 12px;
+  }
+
+  .stat-card {
+    margin-bottom: 16px;
+  }
+
+  .stat-card .ant-statistic-content-value {
+    font-size: 24px !important;
+  }
+}
