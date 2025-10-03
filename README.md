@@ -11,21 +11,30 @@ npm run dev
 
 O sistema estará disponível em: http://localhost:5173/
 
-## 👥 Como testar
+## 👥 Autenticação
 
-### Para testar como Professor:
-1. Faça login com um email que contenha "professor" (ex: `professor@anima.edu.br`)
-2. Use qualquer senha
-3. Acesse "Disciplinas" no menu lateral
-4. Selecione uma disciplina e uma aula
-5. Clique em "Iniciar Chamada" para gerar um código de 6 dígitos
-6. O código expira em 30 segundos e pode ser regenerado
+Agora a aplicação utiliza **Keycloak** para autenticação (SSO). A tela de login exibe um botão "Entrar com Keycloak" que redireciona para o provedor.
 
-### Para testar como Aluno:
-1. Faça login com um email que NÃO contenha "professor" (ex: `aluno@anima.edu.br`)
-2. Use qualquer senha
-3. Acesse "Disciplinas" no menu lateral
-4. Digite o código fornecido pelo professor para registrar presença
+### Configuração do Keycloak
+Crie um arquivo `.env` baseado em `.env.example`:
+```
+VITE_KEYCLOAK_URL=https://seu-dominio-keycloak
+VITE_KEYCLOAK_REALM=ping-presenca
+VITE_KEYCLOAK_CLIENT_ID=frontend-app
+```
+
+Reinicie o servidor de desenvolvimento após definir as variáveis.
+
+### Mapeamento de Papéis (Roles)
+O sistema determina o perfil (professor ou aluno) inspecionando roles presentes no token (realm ou client):
+- Se algum role contém a substring `prof` (ex: `professor`, `ROLE_PROFESSOR`), o usuário é tratado como `professor`.
+- Caso contrário, será considerado `student`.
+
+Adapte essa lógica em `src/utils/auth.ts` conforme a modelagem de roles do seu ambiente.
+
+### Estado de Autenticação
+O hook `useAuth` encapsula inicialização, refresh e logout do Keycloak. O token é armazenado em `localStorage` para facilitar chamadas de API futuras.
+
 
 ## 🎨 Funcionalidades
 
@@ -47,7 +56,8 @@ O sistema estará disponível em: http://localhost:5173/
 
 - **React 19** - Framework principal
 - **TypeScript** - Tipagem estática
-- **Zustand** - Gerenciamento de estado
+- **Zustand** - Gerenciamento de estado (uso reduzido; autenticação migrou para Keycloak)
+- **Keycloak JS** - Autenticação e SSO
 - **Ant Design** - Biblioteca de componentes UI
 - **CoreUI** - Componentes adicionais
 - **React Router** - Roteamento
@@ -81,7 +91,7 @@ Atualmente o sistema utiliza dados simulados para demonstração:
 ## 🚧 Próximos Passos
 
 1. Integração com API real do sistema da Ânima
-2. Autenticação via SSO institucional
+2. (Concluído) Autenticação via Keycloak SSO institucional
 3. Persistência de dados
 4. Relatórios de presença
 5. Notificações em tempo real

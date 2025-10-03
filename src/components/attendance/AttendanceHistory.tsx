@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Table, Card, Typography, Tag, Checkbox, Button, Tooltip, Space, Select, Row, Col } from 'antd';
 import { EditOutlined, SaveOutlined, UndoOutlined, HistoryOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
@@ -24,12 +24,13 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
   const [editMode, setEditMode] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
   const [selectedDate, setSelectedDate] = useState<string>('all');
-  const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>([
+  // Factory para dados mockados, dependente do userId
+  const createMockData = useCallback((uid?: string): AttendanceRecord[] => ([
     // Dados mockados para o aluno logado (assumindo userId como string do email)
     {
       id: '1',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -43,7 +44,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '7',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -57,7 +58,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '8',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -70,7 +71,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '9',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -84,7 +85,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '10',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -98,7 +99,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '11',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -112,7 +113,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '12',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -125,7 +126,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '13',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -139,7 +140,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '14',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -153,7 +154,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '15',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -166,7 +167,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
     {
       id: '16',
       student: {
-        id: userId || 'aluno',
+        id: uid || 'aluno',
         name: 'João Silva',
         email: 'joao.silva@email.com',
         enrollment: '2024001'
@@ -274,7 +275,14 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
       courseName: 'Programação Web',
       isPresent: false
     }
-  ]);
+  ]), []);
+
+  const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>(() => createMockData(userId));
+
+  // Regerar os dados mockados quando o userId for definido/alterado (ex: após login)
+  useEffect(() => {
+    setAttendanceData(createMockData(userId));
+  }, [userId, createMockData]);
 
   // Filtrar dados baseado no usuário (se for aluno, mostrar apenas seus registros)
   const filteredData = userRole === 'student' && userId 

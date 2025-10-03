@@ -50,7 +50,7 @@ const AttendanceCode: React.FC = () => {
       setCodeActive(true);
       
       // Gerar URL do QR Code
-      const url = `${baseUrl}/student/courses?codigo=${selectedClass.attendanceCode}`;
+  const url = `${baseUrl}/courses?codigo=${selectedClass.attendanceCode}`;
       setQrCodeUrl(url);
       
       // Calcular o tempo restante se houver um código ativo
@@ -78,7 +78,7 @@ const AttendanceCode: React.FC = () => {
         setCodeActive(true);
         
         // Atualizar URL do QR Code
-        const url = `${baseUrl}/student/courses?codigo=${newCode}`;
+  const url = `${baseUrl}/courses?codigo=${newCode}`;
         setQrCodeUrl(url);
       }
     };
@@ -129,7 +129,7 @@ const AttendanceCode: React.FC = () => {
       setCodeActive(true);
       
       // Atualizar URL do QR Code
-      const url = `${baseUrl}/student/courses?codigo=${newCode}`;
+  const url = `${baseUrl}/courses?codigo=${newCode}`;
       setQrCodeUrl(url);
       
       showToast.success('Código Gerado', 'Um novo código de presença foi gerado');

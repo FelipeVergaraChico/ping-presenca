@@ -6,14 +6,16 @@ import AppLayout from '../../components/layout/AppLayout';
 import StatisticCard from '../../components/ui/StatisticCard';
 import AttendanceHistory from '../../components/attendance/AttendanceHistory';
 import { useAttendanceStore } from '../../store/attendanceStore';
-import { useAuthStore } from '../../store/authStore';
+import useAuth from '../../hooks/useAuth';
+import { mapKeycloakToUser } from '../../utils/auth';
 import { useResponsive } from '../../hooks/useResponsive';
 
 const { Title } = Typography;
 
 const StudentDashboard: React.FC = () => {
   const { activeCourses, classes, fetchCourses, fetchClasses } = useAttendanceStore();
-  const { user } = useAuthStore();
+  const { keycloak } = useAuth();
+  const { user } = React.useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
   const { isMobile } = useResponsive();
   const navigate = useNavigate();
   
@@ -33,7 +35,7 @@ const StudentDashboard: React.FC = () => {
   const activeClasses = classes.filter(c => c.isAttendanceActive);
 
   const handleParticipateInCall = () => {
-    navigate('/student/courses');
+    navigate('/courses');
   };
   
   return (

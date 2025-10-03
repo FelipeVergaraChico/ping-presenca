@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuthStore } from './store/authStore';
+import useAuth from './hooks/useAuth';
+import { mapKeycloakToUser } from './utils/auth';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ToastProvider from './components/ui/ToastProvider';
 import ThemedConfigProvider from './components/ui/ThemedConfigProvider';
@@ -17,47 +18,38 @@ import StudentDashboard from './pages/student/DashboardPage';
 import StudentAttendance from './pages/student/AttendancePage';
 
 // Protected Route component
-const ProtectedRoute = ({ 
-  children, 
-  requiredRole 
-}: { 
-  children: React.ReactElement, 
-  requiredRole?: 'student' | 'professor' 
-}) => {
-  const { isAuthenticated, user } = useAuthStore();
-  const checkAuth = useAuthStore((state) => state.checkAuth);
-  
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-  
+const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
+  const { isAuthenticated, isInitialized } = useAuth();
+  if (!isInitialized) {
+    return <div style={{ padding: 40, textAlign: 'center' }}>Carregando autenticação...</div>;
+  }
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
-  if (requiredRole && user?.role !== requiredRole) {
-    const redirectPath = user?.role === 'student' ? '/student/dashboard' : '/professor/dashboard';
-    return <Navigate to={redirectPath} replace />;
-  }
-  
   return children;
+};
+
+// Role-aware components
+const RoleDashboard = () => {
+  const { keycloak } = useAuth();
+  const { user } = useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
+  if (user?.role === 'student') return <StudentDashboard />;
+  return <ProfessorDashboard />;
+};
+
+const RoleCourses = () => {
+  const { keycloak } = useAuth();
+  const { user } = useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
+  if (user?.role === 'student') return <StudentAttendance />;
+  return <ProfessorAttendance />;
 };
 
 // Initial route handler
 const InitialRoute = () => {
-  const { isAuthenticated, user } = useAuthStore();
-  const checkAuth = useAuthStore((state) => state.checkAuth);
-  
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  const redirectPath = user?.role === 'student' ? '/student/dashboard' : '/professor/dashboard';
-  return <Navigate to={redirectPath} replace />;
+  const { isAuthenticated, isInitialized } = useAuth();
+  if (!isInitialized) return <div style={{ padding: 40, textAlign: 'center' }}>Inicializando...</div>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return <Navigate to="/dashboard" replace />;
 };
 
 function App() {
@@ -74,27 +66,15 @@ function App() {
               {/* Auth Routes */}
               <Route path="/login" element={<LoginPage />} />
               
-              {/* Professor Routes */}
-              <Route path="/professor/dashboard" element={
-                <ProtectedRoute requiredRole="professor">
-                  <ProfessorDashboard />
+              {/* Unified Routes */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <RoleDashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/professor/courses" element={
-                <ProtectedRoute requiredRole="professor">
-                  <ProfessorAttendance />
-                </ProtectedRoute>
-              } />
-              
-              {/* Student Routes */}
-              <Route path="/student/dashboard" element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/student/courses" element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentAttendance />
+              <Route path="/courses" element={
+                <ProtectedRoute>
+                  <RoleCourses />
                 </ProtectedRoute>
               } />
               

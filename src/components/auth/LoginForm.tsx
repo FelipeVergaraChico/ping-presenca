@@ -1,31 +1,22 @@
-import React from 'react';
-import { Form, Input, Button, Card, Typography, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useAuthStore } from '../../store/authStore';
+import React, { useMemo, useEffect } from 'react';
+import { Button, Card, Typography, Spin, Alert } from 'antd';
+import { LoginOutlined } from '@ant-design/icons';
+import useAuth from '../../hooks/useAuth';
+import { mapKeycloakToUser } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const LoginForm: React.FC = () => {
-  const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { login, isLoading } = useAuthStore();
-  const [messageApi, contextHolder] = message.useMessage();
+  const { login, isAuthenticated, keycloak, isInitialized } = useAuth();
+  const { user } = useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
 
-  const onFinish = async (values: { email: string; password: string }) => {
-    const success = await login(values.email, values.password);
-    
-    if (success) {
-      // Verifica se é professor ou aluno para redirecionar
-      if (values.email.includes('professor')) {
-        navigate('/professor/dashboard');
-      } else {
-        navigate('/student/dashboard');
-      }
-    } else {
-      messageApi.error('Falha no login. Verifique suas credenciais.');
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      navigate('/dashboard', { replace: true });
     }
-  };
+  }, [isAuthenticated, user, navigate]);
 
   return (
     <div className="login-container" style={{
@@ -35,56 +26,36 @@ const LoginForm: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      {contextHolder}
       <Card className="login-card">
-        <div className="logo-container">
+        <div className="logo-container" style={{ textAlign: 'center', marginBottom: 24 }}>
           <Title level={2} className="logo-title">Ping Presença</Title>
-          <Title level={4} className="logo-subtitle">Grupo Ânima</Title>
+          <Title level={4} className="logo-subtitle" style={{ marginTop: 0 }}>Grupo Ânima</Title>
         </div>
-        
-        <Form
-          form={form}
-          name="login"
-          onFinish={onFinish}
-          layout="vertical"
-        >
-          <Form.Item
-            name="email"
-            rules={[
-              { required: true, message: 'Por favor, insira seu e-mail institucional!' },
-              { type: 'email', message: 'E-mail inválido!' }
-            ]}
-          >
-            <Input 
-              prefix={<UserOutlined />} 
-              placeholder="E-mail institucional" 
-              size="large"
+        {!isInitialized && (
+          <div style={{ textAlign: 'center', padding: 40 }}>
+            <Spin />
+            <Typography.Paragraph style={{ marginTop: 16 }}>Conectando ao servidor de autenticação...</Typography.Paragraph>
+          </div>
+        )}
+        {isInitialized && !isAuthenticated && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Alert
+              type="info"
+              showIcon
+              message="Autenticação via Keycloak"
+              description="Clique no botão abaixo para entrar usando sua conta institucional."
             />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
-          >
-            <Input.Password 
-              prefix={<LockOutlined />} 
-              placeholder="Senha" 
+            <Button
+              type="primary"
+              icon={<LoginOutlined />}
               size="large"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button 
-              type="primary" 
-              htmlType="submit" 
-              loading={isLoading}
+              onClick={() => login()}
               block
-              size="large"
             >
-              Entrar
+              Entrar com Keycloak
             </Button>
-          </Form.Item>
-        </Form>
+          </div>
+        )}
       </Card>
     </div>
   );

@@ -1,8 +1,10 @@
 export interface User {
   id: string;
   name: string;
+  givenName: string;
+  familyName: string;
   email: string;
-  role: 'student' | 'professor';
+  role: "student" | "professor";
 }
 
 export interface Course {

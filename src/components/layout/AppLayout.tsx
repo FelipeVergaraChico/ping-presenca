@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Layout, Menu, Button, Avatar, Typography, Drawer } from 'antd';
 import { LogoutOutlined, UserOutlined, BookOutlined, HomeOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '../../store/authStore';
+import useAuth from '../../hooks/useAuth';
+import { mapKeycloakToUser } from '../../utils/auth';
 import { useResponsive } from '../../hooks/useResponsive';
 import HamburgerMenu from '../ui/HamburgerMenu';
 import ThemeToggle from '../ui/ThemeToggle';
@@ -17,21 +18,21 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout } = useAuthStore();
+  const { keycloak, logout } = useAuth();
+  const { user } = React.useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
   const { isMobile } = useResponsive();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const isStudent = user?.role === 'student';
-  const baseRoute = isStudent ? '/student' : '/professor';
 
   const menuItems = [
     {
-      key: `${baseRoute}/dashboard`,
+      key: `/dashboard`,
       icon: <HomeOutlined />,
       label: 'Dashboard',
     },
     {
-      key: `${baseRoute}/courses`,
+      key: `/courses`,
       icon: <BookOutlined />,
       label: 'Disciplinas',
     },
@@ -92,7 +93,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {!isMobile && (
             <Text style={{ color: 'white', marginRight: 12 }}>
-              {user?.name}
+              {user?.givenName} {user?.familyName}
             </Text>
           )}
           <ThemeToggle />

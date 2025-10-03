@@ -6,7 +6,8 @@ import { Doughnut, Bar } from 'react-chartjs-2';
 import AppLayout from '../../components/layout/AppLayout';
 import AttendanceHistory from '../../components/attendance/AttendanceHistory';
 import { useAttendanceStore } from '../../store/attendanceStore';
-import { useAuthStore } from '../../store/authStore';
+import useAuth from '../../hooks/useAuth';
+import { mapKeycloakToUser } from '../../utils/auth';
 import { StatisticCard } from '../../components/ui';
 
 // Registrar componentes do Chart.js
@@ -16,7 +17,8 @@ const { Title } = Typography;
 
 const ProfessorDashboard: React.FC = () => {
   const { activeCourses, classes, fetchCourses, fetchClasses } = useAttendanceStore();
-  const { user } = useAuthStore();
+  const { keycloak } = useAuth();
+  const { user } = React.useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
   
   useEffect(() => {
     fetchCourses();
