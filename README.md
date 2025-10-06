@@ -19,8 +19,8 @@ Agora a aplicação utiliza **Keycloak** para autenticação (SSO). A tela de lo
 Crie um arquivo `.env` baseado em `.env.example`:
 ```
 VITE_KEYCLOAK_URL=https://seu-dominio-keycloak
-VITE_KEYCLOAK_REALM=ping-presenca
-VITE_KEYCLOAK_CLIENT_ID=frontend-app
+VITE_KEYCLOAK_REALM=realm-example
+VITE_KEYCLOAK_CLIENT_ID=client-example
 ```
 
 Reinicie o servidor de desenvolvimento após definir as variáveis.
