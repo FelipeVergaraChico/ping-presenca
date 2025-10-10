@@ -26,7 +26,9 @@ const StudentDashboard: React.FC = () => {
   useEffect(() => {
     // Buscar aulas para todas as disciplinas
     activeCourses.forEach(course => {
-      fetchClasses(course.id);
+      if (course && course.id) {
+        fetchClasses(course.id);
+      }
     });
   }, [activeCourses, fetchClasses]);
   
@@ -42,7 +44,7 @@ const StudentDashboard: React.FC = () => {
     <AppLayout>
       <div className="dashboard-header fade-in-mobile">
         <Title level={2} className="dashboard-title">Dashboard do Aluno</Title>
-        <Typography.Paragraph className="dashboard-description" style={{ 
+        <Typography.Paragraph className="dashboard-description-student" style={{ 
           fontSize: isMobile ? '14px' : '16px' 
         }}>
           Bem-vindo(a), {user?.name}! Aqui você pode acompanhar suas disciplinas e registrar presença nas aulas.

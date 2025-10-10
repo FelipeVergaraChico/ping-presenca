@@ -1,35 +1,36 @@
 import React from 'react';
-import { Switch } from 'antd';
-import { BulbOutlined } from '@ant-design/icons';
-import { useTheme } from '../../hooks/useTheme';
+import { Button, Tooltip } from 'antd';
+import { BulbOutlined, MoonOutlined } from '@ant-design/icons';
+import { getTheme, toggleThemeWithTransition } from '../../utils/themeToggle';
 
 const ThemeToggle: React.FC = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const [mode, setMode] = React.useState<'light' | 'dark'>(getTheme());
+
+  React.useEffect(() => {
+    const onThemeChange = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { mode: 'light' | 'dark' };
+      if (detail?.mode) setMode(detail.mode);
+    };
+    window.addEventListener('theme-change', onThemeChange as EventListener);
+    return () => window.removeEventListener('theme-change', onThemeChange as EventListener);
+  }, []);
+
+  const toggle = () => toggleThemeWithTransition();
+
+  const isDark = mode === 'dark';
+  const icon = isDark ? <BulbOutlined /> : <MoonOutlined />;
+  const label = isDark ? 'Modo claro' : 'Modo escuro';
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      gap: '6px',
-      padding: '4px 8px',
-      borderRadius: '6px',
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      transition: 'all 0.3s ease'
-    }}>
-      <BulbOutlined style={{ 
-        color: isDarkMode ? '#faad14' : '#ffffff',
-        fontSize: '14px'
-      }} />
-      <Switch
-        checked={isDarkMode}
-        onChange={toggleTheme}
-        size="small"
-        style={{
-          backgroundColor: isDarkMode ? '#00796b' : '#1890ff'
-        }}
+    <Tooltip title={label} placement="bottom">
+      <Button
+        type="text"
+        aria-label={label}
+        onClick={toggle}
+        icon={icon}
+        style={{ color: 'white' }}
       />
-    </div>
+    </Tooltip>
   );
 };
 

@@ -1,27 +1,37 @@
 import React from 'react';
 import { ConfigProvider, theme } from 'antd';
 import ptBR from 'antd/locale/pt_BR';
-import { useTheme } from '../../hooks/useTheme';
+import { getTheme } from '../../utils/themeToggle';
 
 interface ThemedConfigProviderProps {
   children: React.ReactNode;
 }
 
 const ThemedConfigProvider: React.FC<ThemedConfigProviderProps> = ({ children }) => {
-  const { isDarkMode } = useTheme();
+  const [mode, setMode] = React.useState<'light' | 'dark'>(getTheme());
 
+  React.useEffect(() => {
+    const onThemeChange = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { mode: 'light' | 'dark' };
+      if (detail?.mode) setMode(detail.mode);
+    };
+    window.addEventListener('theme-change', onThemeChange as EventListener);
+    return () => window.removeEventListener('theme-change', onThemeChange as EventListener);
+  }, []);
+
+  const isDark = mode === 'dark';
   const themeConfig = {
-    algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: {
-      colorPrimary: isDarkMode ? '#00796b' : '#1890ff',
-      colorBgBase: isDarkMode ? '#141414' : '#ffffff',
-      colorBgContainer: isDarkMode ? '#1f1f1f' : '#ffffff',
-      colorBgElevated: isDarkMode ? '#262626' : '#ffffff',
-      colorText: isDarkMode ? '#ffffffd9' : '#000000d9',
-      colorTextSecondary: isDarkMode ? '#ffffff73' : '#00000073',
-      colorBorder: isDarkMode ? '#434343' : '#d9d9d9',
+      colorPrimary: '#1890ff',
+      colorBgBase: isDark ? '#0f172a' : '#ffffff',
+      colorBgContainer: isDark ? '#0f172a' : '#ffffff',
+      colorBgElevated: isDark ? '#111827' : '#ffffff',
+      colorText: isDark ? 'rgba(255,255,255,0.92)' : '#000000d9',
+      colorTextSecondary: isDark ? 'rgba(255,255,255,0.65)' : '#00000073',
+      colorBorder: isDark ? '#243041' : '#d9d9d9',
     },
-  };
+  } as const;
 
   return (
     <ConfigProvider 

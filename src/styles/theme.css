@@ -14,23 +14,29 @@
   --error-color: #ff4d4f;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
   --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
 
-.dark-theme {
-  /* Tema escuro com cores personalizadas */
-  --bg-primary: #141414;
-  --bg-secondary: #1f1f1f;
-  --bg-tertiary: #262626;
-  --text-primary: #ffffffd9;
-  --text-secondary: #ffffff73;
-  --text-tertiary: #ffffff40;
-  --border-color: #434343;
-  --primary-color: #00796b;
-  --success-color: #52c41a;
-  --warning-color: #faad14;
-  --error-color: #ff4d4f;
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.6);
+  /* Gradiente de fundo do Login (modo claro) - espectro roxo */
+  --login-gradient: linear-gradient(135deg, #6B46C1 0%, #9333EA 35%, #A855F7 70%, #C084FC 100%);
+
+  /* timing functions for view transitions */
+  --expo-in: linear(
+    0 0%, 0.0085 31.26%, 0.0167 40.94%,
+    0.0289 48.86%, 0.0471 55.92%,
+    0.0717 61.99%, 0.1038 67.32%,
+    0.1443 72.07%, 0.1989 76.7%,
+    0.2659 80.89%, 0.3465 84.71%,
+    0.4419 88.22%, 0.554 91.48%,
+    0.6835 94.51%, 0.8316 97.34%, 1 100%
+  );
+  --expo-out: linear(
+    0 0%, 0.1684 2.66%, 0.3165 5.49%,
+    0.446 8.52%, 0.5581 11.78%,
+    0.6535 15.29%, 0.7341 19.11%,
+    0.8011 23.3%, 0.8557 27.93%,
+    0.8962 32.68%, 0.9283 38.01%,
+    0.9529 44.08%, 0.9711 51.14%,
+    0.9833 59.06%, 0.9915 68.74%, 1 100%
+  );
 }
 
 /* Aplicação das variáveis globais */
@@ -38,6 +44,7 @@ html, body {
   background-color: var(--bg-secondary) !important;
   color: var(--text-primary) !important;
   transition: background-color 0.3s ease, color 0.3s ease;
+  color-scheme: light dark;
 }
 
 #root {
@@ -250,94 +257,6 @@ html, body {
   }
 }
 
-/* Tema escuro para componentes específicos do Ant Design */
-.dark-theme .ant-select-selector,
-.dark-theme .ant-input,
-.dark-theme .ant-btn-default {
-  background-color: var(--bg-tertiary) !important;
-  border-color: var(--border-color) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-select-selector:hover,
-.dark-theme .ant-input:hover,
-.dark-theme .ant-btn-default:hover {
-  border-color: var(--primary-color) !important;
-}
-
-.dark-theme .ant-select-dropdown {
-  background-color: var(--bg-primary) !important;
-  border-color: var(--border-color) !important;
-}
-
-.dark-theme .ant-select-item {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-select-item:hover {
-  background-color: var(--bg-tertiary) !important;
-}
-
-.dark-theme .ant-menu {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-menu-item {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-menu-item:hover {
-  background-color: var(--bg-tertiary) !important;
-}
-
-.dark-theme .ant-menu-item-selected {
-  background-color: var(--primary-color) !important;
-}
-
-.dark-theme .ant-drawer-header {
-  background-color: var(--bg-primary) !important;
-  border-bottom-color: var(--border-color) !important;
-}
-
-.dark-theme .ant-drawer-body {
-  background-color: var(--bg-primary) !important;
-}
-
-.dark-theme .ant-drawer-title {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-typography {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-typography-caption {
-  color: var(--text-secondary) !important;
-}
-
-.dark-theme .ant-list {
-  background-color: var(--bg-primary) !important;
-}
-
-.dark-theme .ant-list-item {
-  border-bottom-color: var(--border-color) !important;
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-statistic {
-  color: var(--text-primary) !important;
-}
-
-.dark-theme .ant-statistic-title {
-  color: var(--text-secondary) !important;
-}
-
-.dark-theme .ant-tag {
-  background-color: var(--bg-tertiary) !important;
-  border-color: var(--border-color) !important;
-  color: var(--text-primary) !important;
-}
 
 /* Estatísticas com gradientes */
 .stat-card {
@@ -347,14 +266,80 @@ html, body {
   overflow: hidden;
 }
 
-.dark-theme .stat-card {
-  background: linear-gradient(135deg, #1f1f1f 0%, #2d2d2d 100%);
+/* Dark theme variables applied via .dark on html */
+.dark {
+  /* overwrite CSS variables */
+  --bg-primary: #0f172a; /* slate-900 */
+  --bg-secondary: #0b1220;
+  --bg-tertiary: #111827; /* slate-800 */
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-tertiary: rgba(255, 255, 255, 0.38);
+  --border-color: #243041;
+  --primary-color: #4096ff;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+  /* Gradiente de fundo do Login (modo escuro) - espectro roxo mais escuro */
+  /* Mantém o espectro, reduzindo luminância e elevando contraste com o foreground */
+  --login-gradient: linear-gradient(135deg,
+    #1a093b 0%,   /* mais escuro que #6B46C1 */
+    #3a127a 35%,  /* roxo médio escuro (indigo-700) */
+    #561391 70%,  /* roxo vívido (purple-700) */
+    #5e25e0 100%  /* tom final mantendo a família de cor */
+  );
 }
 
-/* Gráficos com tema escuro */
-.dark-theme canvas {
-  filter: brightness(1.1) contrast(1.1);
+/* Ensure Ant Layout respects variables in dark mode */
+.dark .ant-layout-header {
+  background-color: #0b1220 !important;
 }
+.dark .ant-layout,
+.dark .ant-layout-content,
+.dark #root {
+  background-color: var(--bg-secondary) !important;
+}
+.dark .ant-card,
+.dark .ant-card-head,
+.dark .ant-card-body,
+.text-history-components {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dashboard-description-professor
+.dashboard-description-student,
+.text-history {
+  color: var(--text-primary) !important;
+}
+
+/* View Transitions: circle-blur-top-left animation */
+/* Only apply when the user has not asked to reduce motion */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(root) {
+    animation-timing-function: var(--expo-out);
+  }
+  ::view-transition-new(root) {
+    mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="0" cy="0" r="18" fill="white" filter="url(%23blur)"/></svg>') top left / 0 no-repeat;
+    mask-origin: content-box;
+    animation: theme-scale 1s;
+    animation-fill-mode: both;
+    transform-origin: top left;
+  }
+  ::view-transition-old(root),
+  .dark::view-transition-old(root) {
+    animation: theme-scale 1s;
+    animation-fill-mode: both;
+    transform-origin: top left;
+    z-index: -1;
+  }
+  @keyframes theme-scale {
+    to { mask-size: 350vmax; }
+  }
+}
+
+
 
 /* Loading states */
 .loading-shimmer {
@@ -363,10 +348,6 @@ html, body {
   animation: shimmer 1.5s infinite;
 }
 
-.dark-theme .loading-shimmer {
-  background: linear-gradient(90deg, #2d2d2d 25%, #3d3d3d 50%, #2d2d2d 75%);
-  background-size: 200% 100%;
-}
 
 @keyframes shimmer {
   0% {

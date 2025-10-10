@@ -523,7 +523,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
       
       {/* Estatísticas do Aluno */}
       {userRole === 'student' && finalFilteredData.length > 0 && (
-        <div style={{ 
+        <div className='text-history-components' style={{ 
           marginTop: 16, 
           padding: 16, 
           backgroundColor: '#f0f9ff', 
@@ -540,7 +540,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
                 <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#52c41a' }}>
                   {finalFilteredData.filter(r => r.isPresent).length}
                 </div>
-                <Text style={{ fontSize: '12px', color: '#666' }}>Presenças</Text>
+                <Text style={{ fontSize: '12px' }}>Presenças</Text>
               </div>
             </Col>
             <Col xs={12} sm={6}>
@@ -548,7 +548,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
                 <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ff4d4f' }}>
                   {finalFilteredData.filter(r => !r.isPresent).length}
                 </div>
-                <Text style={{ fontSize: '12px', color: '#666' }}>Faltas</Text>
+                <Text style={{ fontSize: '12px' }}>Faltas</Text>
               </div>
             </Col>
             <Col xs={12} sm={6}>
@@ -556,7 +556,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
                 <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#1890ff' }}>
                   {finalFilteredData.length}
                 </div>
-                <Text style={{ fontSize: '12px', color: '#666' }}>Total Aulas</Text>
+                <Text style={{ fontSize: '12px' }}>Total Aulas</Text>
               </div>
             </Col>
             <Col xs={12} sm={6}>
@@ -574,7 +574,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
                     ? Math.round((finalFilteredData.filter(r => r.isPresent).length / finalFilteredData.length) * 100)
                     : 0}%
                 </div>
-                <Text style={{ fontSize: '12px', color: '#666' }}>Frequência</Text>
+                <Text style={{ fontSize: '12px' }}>Frequência</Text>
               </div>
             </Col>
           </Row>
@@ -600,13 +600,13 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
       )}
       
       {/* Legenda */}
-      <div style={{ 
+      <div className='text-history-components' style={{ 
         marginTop: 16, 
         padding: 12, 
         backgroundColor: '#f5f5f5', 
         borderRadius: 6 
       }}>
-        <Space wrap>
+        <Space wrap className='text-history-components'>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <Tag color="success">✓</Tag>
             <Text style={{ fontSize: '12px' }}>Presente</Text>
@@ -616,7 +616,7 @@ const AttendanceHistory: React.FC<AttendanceHistoryProps> = ({
             <Text style={{ fontSize: '12px' }}>Ausente</Text>
           </div>
           {isEditable && (
-            <Text style={{ fontSize: '12px', fontStyle: 'italic' }}>
+            <Text style={{ fontSize: '12px', fontStyle: 'italic' }} className='text-history'>
               * Clique em "Editar" para modificar os registros de presença
             </Text>
           )}

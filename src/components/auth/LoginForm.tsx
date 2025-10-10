@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="login-container" style={{
-      background: 'linear-gradient(135deg, #6B46C1 0%, #9333EA 35%, #A855F7 70%, #C084FC 100%)',
+      background: 'var(--login-gradient)',
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',

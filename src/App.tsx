@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
 import { mapKeycloakToUser } from './utils/auth';
-import { ThemeProvider } from './contexts/ThemeContext';
 import ToastProvider from './components/ui/ToastProvider';
 import ThemedConfigProvider from './components/ui/ThemedConfigProvider';
 
@@ -54,12 +53,11 @@ const InitialRoute = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ThemedConfigProvider>
-        <Router>
-          <div className="app">
-            <ToastProvider />
-            <Routes>
+    <ThemedConfigProvider>
+      <Router>
+        <div className="app">
+          <ToastProvider />
+          <Routes>
               {/* Initial Route */}
               <Route path="/" element={<InitialRoute />} />
               
@@ -80,11 +78,10 @@ function App() {
               
               {/* Fallback Route */}
               <Route path="*" element={<InitialRoute />} />
-            </Routes>
-          </div>
-        </Router>
-      </ThemedConfigProvider>
-    </ThemeProvider>
+          </Routes>
+        </div>
+      </Router>
+    </ThemedConfigProvider>
   );
 }
 

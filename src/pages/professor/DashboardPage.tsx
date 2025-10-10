@@ -20,6 +20,8 @@ const ProfessorDashboard: React.FC = () => {
   const { keycloak } = useAuth();
   const { user } = React.useMemo(() => mapKeycloakToUser(keycloak), [keycloak]);
   
+
+  
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
@@ -27,13 +29,22 @@ const ProfessorDashboard: React.FC = () => {
   useEffect(() => {
     // Buscar aulas para todas as disciplinas
     activeCourses.forEach(course => {
-      fetchClasses(course.id);
+      if (course && course.id) {
+        fetchClasses(course.id);
+      }
     });
   }, [activeCourses, fetchClasses]);
   
   const today = new Date().toISOString().split('T')[0];
   const todayClasses = classes.filter(c => c.date === today);
   const activeClass = todayClasses.find(c => c.isAttendanceActive);
+  
+  // Calcular estatísticas
+  const totalCourses = activeCourses?.length || 0;
+  const totalTodayClasses = todayClasses?.length || 0;
+  const totalClasses = classes?.length || 0;
+  
+
   
   // Dados mockados para demonstração
   const totalStudents = 45;
@@ -103,7 +114,7 @@ const ProfessorDashboard: React.FC = () => {
     <AppLayout>
       <div className="dashboard-header">
         <Title level={2} className="dashboard-title">Dashboard do Professor</Title>
-        <Typography.Paragraph className="dashboard-description">
+        <Typography.Paragraph className="dashboard-description-professor">
           Bem-vindo(a), {user?.name}! Aqui você pode gerenciar suas turmas e chamadas.
         </Typography.Paragraph>
       </div>
@@ -113,9 +124,10 @@ const ProfessorDashboard: React.FC = () => {
           <Card className="stat-card">
             <StatisticCard
               title="Total de Disciplinas"
-              value={activeCourses.length}
+              value={totalCourses}
               prefix={<BookOutlined />}
               valueColor="#1890ff"
+              message={totalCourses > 0 ? `${totalCourses} disciplinas ativas` : 'Nenhuma disciplina'}
             />
           </Card>
         </Col>
@@ -123,9 +135,10 @@ const ProfessorDashboard: React.FC = () => {
           <Card className="stat-card">
             <StatisticCard
               title="Aulas Hoje"
-              value={todayClasses.length}
+              value={totalTodayClasses}
               prefix={<ClockCircleOutlined />}
               valueColor="#722ed1"
+              message={totalClasses > 0 ? `Total de ${totalClasses} aulas` : 'Nenhuma aula encontrada'}
             />
           </Card>
         </Col>

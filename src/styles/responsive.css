@@ -94,12 +94,7 @@
     max-width: none !important;
   }
   
-  /* Theme toggle mobile */
-  .theme-switch {
-    top: 10px;
-    right: 10px;
-    padding: 6px 10px;
-  }
+  /* Theme toggle removed */
   
   /* Gráficos mobile */
   .ant-card[title*="📊"], 
@@ -240,15 +235,7 @@
     overflow-y: auto;
   }
   
-  .theme-switch {
-    top: 5px;
-    right: 5px;
-    padding: 4px 8px;
-  }
   
-  .theme-switch .ant-typography {
-    display: none; /* Ocultar texto em landscape */
-  }
 }
 
 /* High DPI screens */
@@ -277,17 +264,6 @@
   }
 }
 
-/* Dark mode high contrast */
-@media (prefers-contrast: high) {
-  .dark-theme {
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --border-color: #666666;
-    --bg-primary: #000000;
-    --bg-secondary: #111111;
-    --bg-tertiary: #222222;
-  }
-}
 
 /* Print styles */
 @media print {

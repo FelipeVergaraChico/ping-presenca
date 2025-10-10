@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Keycloak, { type KeycloakTokenParsed } from "keycloak-js";
+import api from "./useAPI";
 
 let keycloakInstance: Keycloak | null = null;
 let initializationPromise: Promise<{ keycloak: Keycloak; authenticated: boolean }> | null = null;
@@ -11,6 +12,8 @@ const useAuth = () => {
   const [userData, setUserData] = useState<unknown>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [me, setMe] = useState<unknown>(null);
+  const meFetchedRef = useRef(false);
 
   const updateUserData = useCallback((kc: Keycloak) => {
     if (kc && kc.authenticated && kc.tokenParsed) {
@@ -29,7 +32,10 @@ const useAuth = () => {
       setIsAuthenticated(false);
       setUserData(null);
       setToken(null);
+      setMe(null);
       localStorage.removeItem("token");
+      localStorage.removeItem("me");
+      meFetchedRef.current = false;
       keycloakInstance = null;
       initializationPromise = null;
       if (refreshTokenInterval) {
@@ -42,7 +48,10 @@ const useAuth = () => {
       setIsAuthenticated(false);
       setUserData(null);
       setToken(null);
+      setMe(null);
       localStorage.removeItem("token");
+      localStorage.removeItem("me");
+      meFetchedRef.current = false;
       keycloakInstance = null;
       initializationPromise = null;
       window.location.href = "/login";
@@ -126,6 +135,28 @@ const useAuth = () => {
       };
     }
   }, [isInitialized, keycloak, checkTokenRefresh, updateUserData]);
+
+  // Fetch backend user info after successful login once per session
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+  const response = await api.get("auth/me");
+        setMe(response.data);
+        try {
+          localStorage.setItem("me", JSON.stringify(response.data));
+        } catch {
+          // ignore quota/serialization issues
+        }
+      } catch (error) {
+        console.error("Failed to fetch /auth/me:", error);
+      }
+    };
+
+    if (isAuthenticated && token && !meFetchedRef.current) {
+      meFetchedRef.current = true;
+      fetchMe();
+    }
+  }, [isAuthenticated, token]);
 
   useEffect(() => {
     if (keycloakInstance && keycloakInstance.authenticated !== undefined) {
@@ -215,6 +246,7 @@ const useAuth = () => {
   return {
     isAuthenticated,
     userData,
+    me,
     token,
     isInitialized,
     login,
